@@ -1,0 +1,17 @@
+{
+  "name": "slp-balances",
+  "version": "1.0.0",
+  "description": "Get balances of all holders of a given token",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bignumber.js": "^7.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "SpendBCH",
+  "license": "MIT"
+}
