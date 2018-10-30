@@ -1,14 +1,51 @@
 const axios = require('axios')
 const BigNumber = require('bignumber.js')
+const chunk = require('lodash.chunk')
 
-async function main() {
-  const bitdbApiKey = 'set_your_key'
-  const tokenId = '00ea27261196a411776f81029c0ebe34362936b4a9847deb1f7a40a02b3a1476'
-  const outputs = await getAllOutputs(bitdbApiKey, tokenId)
-  console.log(outputs)
+async function getBalances(bitdbApiKey, tokenId) {
+  try {
+    const utxos = await getSlpUtxos(bitdbApiKey, tokenId)
+    if (utxos.length === 0) return []
+
+    const txidsToValidate = [
+      ...new Set(utxos.map(utxo => utxo.txid)),
+    ]
+
+    const validTxidArrays = await Promise.all(chunk(txidsToValidate, 20).map(txids => {
+      return axios({
+        method: 'GET',
+        url: `https://tokengraph.network/verify/${txids.join(',')}`,
+        json: true,
+      }).then(res => res.data.response.filter(i => !i.errors).map(i => i.tx))
+    }))
+    const validTxids = [].concat(...validTxidArrays)
+
+    const validUtxos = utxos.filter(utxo => validTxids.includes(utxo.txid))
+
+    const balances = validUtxos.reduce((bals, utxo) => {
+      const existingBal = bals.find(bal => bal.address === utxo.address)
+      if (existingBal) {
+        existingBal.amount = existingBal.amount.plus(utxo.amount)
+      } else {
+        bals.push({
+          address: utxo.address,
+          amount: utxo.amount,
+        })
+      }
+      return bals
+    }, []).map(bal => {
+      bal.amount = bal.amount.toString()
+      return bal
+    })
+
+    return balances
+  } catch (err) {
+    console.error('slp-balances', err)
+    return []
+  }
 }
 
-async function getAllOutputs(bitdbApiKey, tokenId) {
+async function getSlpUtxos(bitdbApiKey, tokenId) {
   try {
     var query = {
       "v": 3,
@@ -51,9 +88,17 @@ async function getAllOutputs(bitdbApiKey, tokenId) {
 
     const outputs = parseSlpOutputs(tokenId, tokenTxs)
 
-    return outputs
+    const unspentOutputs = outputs.filter(output => {
+      return !tokenTxs.some(tokenTx => {
+        return tokenTx.in.some(input => {
+          return input.e.h === output.txid && input.e.i === output.vout
+        })
+      })
+    })
+
+    return unspentOutputs
   } catch (err) {
-    console.log(err)
+    console.error('slp-balances', err)
     return []
   }
 }
@@ -84,7 +129,7 @@ function parseGenesisDecimals(tx) {
 function parseAmount(amountHex, decimals) {
   let amount = new BigNumber(amountHex, 16)
   amount = decimals ? amount.div(10 ** decimals) : amount
-  return amount.toString()
+  return amount
 }
 
 function parseGenesisOutput(tx, decimals) {
@@ -137,10 +182,12 @@ function parseSendOutputs(tx, decimals) {
       outputs.push(output)
     }
   } catch(err) {
-    console.log(err)
+    console.error('slp-balances', err)
   }
 
   return outputs
 }
 
-main()
+module.exports = { 
+  getBalances,
+}
