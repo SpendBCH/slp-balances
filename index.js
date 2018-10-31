@@ -28,7 +28,7 @@ async function getBalances(bitdbApiKey, tokenId) {
         existingBal.amount = existingBal.amount.plus(utxo.amount)
       } else {
         bals.push({
-          address: utxo.address,
+          address: `bitcoincash:${utxo.address}`,
           amount: utxo.amount,
         })
       }

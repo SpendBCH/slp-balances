@@ -20,27 +20,27 @@ async function main() {
 
   // [
   //   {
-  //     address: "qrxqcmh8ryux52s9uudgs6n2vqlxva2n9c0ygmxtr9",
+  //     address: "bitcoincash:qrxqcmh8ryux52s9uudgs6n2vqlxva2n9c0ygmxtr9",
   //     amount: "1.25"
   //   },
   //   {
-  //     address: "qpj6mrzrygelddyzp978cz379g68ywks9ug7xcpf4s",
+  //     address: "bitcoincash:qpj6mrzrygelddyzp978cz379g68ywks9ug7xcpf4s",
   //     amount: "82.75"
   //   },
   //   {
-  //     address: "qq44hua5vzwllg3z0v2v47zqa4d86yqmasl7delpn0",
+  //     address: "bitcoincash:qq44hua5vzwllg3z0v2v47zqa4d86yqmasl7delpn0",
   //     amount: "6"
   //   },
   //   {
-  //     address: "qpau56wwgyetef54wlxlfdkaqr87kh05mvfqghkz7y",
+  //     address: "bitcoincash:qpau56wwgyetef54wlxlfdkaqr87kh05mvfqghkz7y",
   //     amount: "2"
   //   },
   //   {
-  //     address: "qrv9s50hk4q8pfhj82mfkuev22f2z5emsgyat52pzq",
+  //     address: "bitcoincash:qrv9s50hk4q8pfhj82mfkuev22f2z5emsgyat52pzq",
   //     amount: "1.5"
   //   },
   //   {
-  //     address: "qqn4tcdqvaz6frepnrymcu4zv34w5kke2ye6txu4rp",
+  //     address: "bitcoincash:qqn4tcdqvaz6frepnrymcu4zv34w5kke2ye6txu4rp",
   //     amount: "6.5"
   //   }
   // ]
