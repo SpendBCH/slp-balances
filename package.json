@@ -1,6 +1,6 @@
 {
   "name": "slp-balances",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Get balances of all holders of a given token",
   "main": "index.js",
   "dependencies": {

@@ -40,7 +40,7 @@ async function getBalances(bitdbApiKey, tokenId) {
         return bals;
       }, [])
       .map(bal => {
-        bal.amount = bal.amount.toString();
+        bal.balance = bal.balance.toString();
         return bal;
       });
 
