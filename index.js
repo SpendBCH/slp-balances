@@ -1,8 +1,7 @@
 const axios = require("axios");
 const BigNumber = require("bignumber.js");
 const chunk = require("lodash.chunk");
-const SLP = require("slp-sdk");
-console.log('SLP: ', SLP)
+const SLP = require("slp-sdk/lib/SLP").default;
 
 async function getBalances(bitdbApiKey, tokenId) {
   try {
