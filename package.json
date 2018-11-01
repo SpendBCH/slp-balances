@@ -1,12 +1,13 @@
 {
   "name": "slp-balances",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Get balances of all holders of a given token",
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
-    "lodash.chunk": "^4.2.0"
+    "lodash.chunk": "^4.2.0",
+    "slp-sdk": "^0.2.3"
   },
   "devDependencies": {},
   "scripts": {
